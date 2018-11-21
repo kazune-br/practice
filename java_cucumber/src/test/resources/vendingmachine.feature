@@ -23,7 +23,19 @@ Feature: 自動販売機
     And  100円を入金
     Then 200円が入金されている
 
-  Scenario: エナジードリンクを追加
+  Scenario: エナジードリンクを追加してさらに追加
     Given 自動販売機がある
-    When モンスターを1個補充
-    Then モンスターの在庫が1個
+    When "モンスター"を1個補充
+    And  "モンスター"を1個補充
+    Then "モンスター"の在庫が2個
+
+    # TODO レッドブルとモンスターを両方追加するケースが消えた＞＜
+  Scenario Outline: エナジードリンクを追加
+    Given 自動販売機がある
+    When "<drink_name>"を<drink_count>個補充
+    Then "<drink_name>"の在庫が<current_drink_count>個
+    Examples:
+      | drink_name | drink_count | current_drink_count |
+      | レッドブル      | 1           | 1                   |
+      | モンスター      | 3           | 3                   |
+    |レッドブル       |2            |2                    |
